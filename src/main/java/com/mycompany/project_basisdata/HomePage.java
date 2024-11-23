@@ -5,6 +5,9 @@
 package com.mycompany.project_basisdata;
 
 import java.awt.BorderLayout;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -38,6 +41,7 @@ public class HomePage extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
         jToggleButton1 = new javax.swing.JToggleButton();
         kirim = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -119,6 +123,9 @@ public class HomePage extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
+
+        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
+        jScrollPane2.setViewportView(jPanel2);
 
         jToggleButton1.setText("Back");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -261,13 +268,15 @@ public class HomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        Tes();
+        jPanel2.revalidate();
+        jPanel2.repaint();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         cek.setVisible(false);
         Home.setVisible(true);
-        
+
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -315,6 +324,16 @@ public class HomePage extends javax.swing.JFrame {
         });
     }
 
+    private void Tes() {
+        for (int i = 0; i < 100; i++) {
+            JPanel tes = new JPanel();
+            tes.setLayout(new BoxLayout(tes, BoxLayout.X_AXIS));
+            JLabel labe = new JLabel("Tes");
+            tes.add(labe);
+            jPanel2.add(tes);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Home;
     private javax.swing.JPanel cek;
@@ -326,6 +345,7 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
