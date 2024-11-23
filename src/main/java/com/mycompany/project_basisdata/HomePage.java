@@ -5,8 +5,17 @@
 package com.mycompany.project_basisdata;
 
 import java.awt.BorderLayout;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Date;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -43,10 +52,14 @@ public class HomePage extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jToggleButton1 = new javax.swing.JToggleButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         kirim = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        Apotek = new javax.swing.JTextField();
+        REgObat = new javax.swing.JTextField();
         jSpinner2 = new javax.swing.JSpinner();
         jSpinner1 = new javax.swing.JSpinner();
         jButton4 = new javax.swing.JButton();
@@ -78,20 +91,20 @@ public class HomePage extends javax.swing.JFrame {
         HomeLayout.setHorizontalGroup(
             HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HomeLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(283, 283, 283))
+                .addGap(322, 322, 322))
             .addGroup(HomeLayout.createSequentialGroup()
-                .addGap(255, 255, 255)
+                .addGap(295, 295, 295)
                 .addGroup(HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addGap(295, 295, 295))
         );
         HomeLayout.setVerticalGroup(
             HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HomeLayout.createSequentialGroup()
-                .addContainerGap(94, Short.MAX_VALUE)
+                .addGap(112, 112, 112)
                 .addComponent(jLabel1)
                 .addGap(12, 12, 12)
                 .addComponent(jButton1)
@@ -106,7 +119,7 @@ public class HomePage extends javax.swing.JFrame {
         jLabel2.setText("Cek Stock");
 
         jTextField1.setBackground(new java.awt.Color(240, 240, 240));
-        jTextField1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Toko/Apotek", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
+        jTextField1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ID Toko/Apotek", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -114,7 +127,7 @@ public class HomePage extends javax.swing.JFrame {
         });
 
         jTextField2.setBackground(new java.awt.Color(240, 240, 240));
-        jTextField2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Obat Reg", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
+        jTextField2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "No. Reg. Obat", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
 
         jButton3.setText("Simpan");
         jButton3.setToolTipText("");
@@ -123,6 +136,9 @@ public class HomePage extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
+
+        jScrollPane2.setAlignmentX(0.0F);
+        jScrollPane2.setMaximumSize(new java.awt.Dimension(318, 32767));
 
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
         jScrollPane2.setViewportView(jPanel2);
@@ -134,31 +150,51 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Nama Apotek");
+
+        jLabel5.setText("Nama Obat");
+
+        jLabel6.setText("Stok");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asc. by Stok", "Dsc. by Stok", "Asc. by Apotek", "Dsc. by Apotek", "Asc. by Obat", "Dsc. by Obat" }));
+
         javax.swing.GroupLayout cekLayout = new javax.swing.GroupLayout(cek);
         cek.setLayout(cekLayout);
         cekLayout.setHorizontalGroup(
             cekLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cekLayout.createSequentialGroup()
+                .addGroup(cekLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(cekLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(cekLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jToggleButton1))
+                        .addGroup(cekLayout.createSequentialGroup()
+                            .addGap(26, 26, 26)
+                            .addGroup(cekLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cekLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jButton3)))
+                    .addGroup(cekLayout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(jLabel2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cekLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(cekLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(cekLayout.createSequentialGroup()
-                        .addGroup(cekLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(cekLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jToggleButton1))
-                            .addGroup(cekLayout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addGroup(cekLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(cekLayout.createSequentialGroup()
-                                .addGap(97, 97, 97)
-                                .addComponent(jLabel2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cekLayout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(122, 122, 122)))
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(cekLayout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel4)
+                        .addGap(78, 78, 78)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addGap(61, 61, 61))))
         );
         cekLayout.setVerticalGroup(
             cekLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,17 +202,24 @@ public class HomePage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(cekLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(cekLayout.createSequentialGroup()
+                        .addGroup(cekLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(cekLayout.createSequentialGroup()
                         .addComponent(jToggleButton1)
-                        .addGap(24, 24, 24)
+                        .addGap(29, 29, 29)
                         .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
+                        .addGap(2, 2, 2)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
-                        .addGap(0, 77, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2))
+                        .addComponent(jButton3)))
                 .addContainerGap())
         );
 
@@ -185,11 +228,11 @@ public class HomePage extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Montserrat", 1, 24)); // NOI18N
         jLabel3.setText("Kirim");
 
-        jTextField3.setBackground(new java.awt.Color(240, 240, 240));
-        jTextField3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Apotek", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
+        Apotek.setBackground(new java.awt.Color(240, 240, 240));
+        Apotek.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ID Apotek/Toko", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
 
-        jTextField4.setBackground(new java.awt.Color(240, 240, 240));
-        jTextField4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Obat", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
+        REgObat.setBackground(new java.awt.Color(240, 240, 240));
+        REgObat.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "No. Reg. Obat", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
 
         jSpinner2.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.DAY_OF_WEEK));
         jSpinner2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tanggal Pengiriman", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
@@ -197,9 +240,15 @@ public class HomePage extends javax.swing.JFrame {
         jSpinner2.setDoubleBuffered(true);
         jSpinner2.setEditor(new javax.swing.JSpinner.DateEditor(jSpinner2, "dd/MM/yyyy"));
 
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         jSpinner1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Jumlah", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP));
 
         jButton4.setText("Kirim");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Back");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -215,7 +264,7 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kirimLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
                 .addGroup(kirimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(kirimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kirimLayout.createSequentialGroup()
@@ -223,8 +272,8 @@ public class HomePage extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addGap(109, 109, 109))
                         .addGroup(kirimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)))
+                            .addComponent(Apotek)
+                            .addComponent(REgObat, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)))
                     .addGroup(kirimLayout.createSequentialGroup()
                         .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -240,16 +289,16 @@ public class HomePage extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jButton5))
                 .addGap(18, 18, 18)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Apotek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(REgObat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(kirimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         getContentPane().add(kirim, "card4");
@@ -268,7 +317,12 @@ public class HomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Tes();
+
+        String inputToko = jTextField1.getText();
+        String inputObat = jTextField2.getText();
+        jPanel2.removeAll();
+//        jPanel2.setAlignmentX(LEFT_ALIGNMENT);
+        tampilkanStok(inputToko, inputObat);
         jPanel2.revalidate();
         jPanel2.repaint();
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -288,6 +342,15 @@ public class HomePage extends javax.swing.JFrame {
         Home.setVisible(false);
         kirim.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String namaObat=REgObat.getText();
+        String namaToko=Apotek.getText();
+        int jumlah=(int) jSpinner1.getValue();
+        Date tanggal =(Date) jSpinner2.getValue();
+        kirimObat(namaObat, namaToko, tanggal, jumlah);
+        System.out.println(jumlah);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -324,35 +387,105 @@ public class HomePage extends javax.swing.JFrame {
         });
     }
 
-    private void Tes() {
-        for (int i = 0; i < 100; i++) {
-            JPanel tes = new JPanel();
-            tes.setLayout(new BoxLayout(tes, BoxLayout.X_AXIS));
-            JLabel labe = new JLabel("Tes");
-            tes.add(labe);
-            jPanel2.add(tes);
+    public void tampilkanStok(String namaToko, String noReg) {
+        ResultSet resultset = null;
+        int tes=jComboBox1.getSelectedIndex();
+        String filter="";
+        if (tes==0)filter=" ORDER BY Stok ASC";
+        else if(tes==1)filter=" ORDER BY Stok DESC";
+        else if(tes==2)filter=" ORDER BY Memiliki.ID_Apotek ASC";
+        else if(tes==3)filter=" ORDER BY Memiliki.ID_Apotek DESC";
+        else if(tes==4)filter=" ORDER BY Memiliki.No_reg ASC";
+        else if(tes==5)filter=" ORDER BY Memiliki.No_reg DESC";
+        
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String tempToko = "";
+            String tempObat = "";
+            if (!namaToko.isBlank()) {
+                tempToko = " AND Apotek.ID_Apotek=" + namaToko;
+            }
+            if (!noReg.isBlank()) {
+                tempObat = " AND Memiliki.No_reg=\'" + noReg + "\'";
+            }
+
+            String query = "Select nama_Apotek, nama_obat, Stok FROM Apotek, Obat, Memiliki WHERE Apotek.ID_Apotek=Memiliki.ID_Apotek AND Obat.No_reg=Memiliki.No_reg" + tempToko + tempObat+filter;
+            Statement statement = connection.createStatement();
+            resultset = statement.executeQuery(query);
+            while (resultset.next()) {
+                JPanel item = new JPanel();
+                item.setLayout(new BoxLayout(item, BoxLayout.X_AXIS));
+                item.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+                JLabel LabelNamaApotek = new JLabel(resultset.getString(1));
+                LabelNamaApotek.setMaximumSize(new java.awt.Dimension(150, 20));
+                JLabel LabelNamaObat = new JLabel(resultset.getString(2));
+                LabelNamaObat.setMaximumSize(new java.awt.Dimension(200, 20));
+                JLabel LabelStok = new JLabel(resultset.getString(3));
+                LabelStok.setMaximumSize(new java.awt.Dimension(50, 20));
+                item.add(LabelNamaApotek);
+                item.add(LabelNamaObat);
+                item.add(LabelStok);
+                jPanel2.add(item);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JLabel erorr = new JLabel("No apotek atau No Reg_Obat Tidak Terdaftar");
+            jPanel2.add(erorr);
+        }
+    }
+    
+    public void kirimObat(String namaObat, String namaToko, Date tanggal, int jumlah) {
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            java.sql.Date sqlDate = new java.sql.Date(tanggal.getTime());
+            String check ="SELECT * FROM Memiliki WHERE ID_Apotek = "+namaToko +" AND No_reg = \'"+namaObat+"\'";
+            Statement preparedStatementCheck = connection.createStatement();
+            preparedStatementCheck.executeQuery(check);
+            
+            String queryUpdateStok = "UPDATE Memiliki SET Stok = Stok +" + jumlah +" WHERE ID_Apotek = ? AND No_reg = ?";
+            PreparedStatement preparedStatementUpdate = connection.prepareStatement(queryUpdateStok);
+//            preparedStatementUpdate.setInt(1, jumlah);
+            preparedStatementUpdate.setString(1, namaToko);
+            preparedStatementUpdate.setString(2, namaObat);
+            
+            preparedStatementUpdate.executeUpdate();
+            
+            String queryInsertPengiriman = "INSERT INTO Pengiriman (ID_pengiriman, Tanggal, Jumlah_obat) VALUES (?, ?, ?)";
+            PreparedStatement preparedStatementInsert = connection.prepareStatement(queryInsertPengiriman);
+            preparedStatementInsert.setString(1, java.util.UUID.randomUUID().toString());
+            preparedStatementInsert.setDate(2, sqlDate);
+            preparedStatementInsert.setInt(3, jumlah);
+            
+            preparedStatementInsert.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Pengiriman berhasil dan stok diperbarui.");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "No_Apotek atau No_reg tidak terdaftar");
         }
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Apotek;
     private javax.swing.JPanel Home;
+    private javax.swing.JTextField REgObat;
     private javax.swing.JPanel cek;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JPanel kirim;
     // End of variables declaration//GEN-END:variables
